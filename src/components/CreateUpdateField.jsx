@@ -3,6 +3,7 @@ import Paper from '@material-ui/core/Paper';
 
 import { useNewsForm, useTypography } from '../styles/styles';
 
+/**   MAIN FUNCTION COMPONENT  */
 export const NewsFormField = ({ title, value, callback }) => {
   const newsForm = useNewsForm();
   const typography = useTypography();

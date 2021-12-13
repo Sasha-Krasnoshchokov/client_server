@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -11,27 +11,31 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { useTable, useTypography, StyledTableRow } from '../styles/styles';
 import { CustomTableCell } from './CustomTableCell';
 
-export const CustomTable = ({ array, setUserAction }) => {
+import { actions } from '../controllers/actions';
+import { requests } from '../controllers/api';
+import { StateContext} from '../controllers/StateContext';
+
+/**   MAIN FUNCTION COMPONENT  */
+export const CustomTable = ({ setUserAction, setUserPicksId }) => {
+  const context = useContext(StateContext);
+
   const table = useTable();
   const typography = useTypography();
 
-  const [toDisplay, setToDisplay] = useState(array);
+  const selectedItem = (event) => {
+    console.log(event.target.id);
+    setUserAction('update');
+    setUserPicksId(event.target.id);
+  };
 
-  useEffect(() => {
-    setToDisplay(array);
-  }, [array]);
-
-  const userTryDelete = (id) => {
+  const deleteItem = (id) => {
     const result = window.confirm('Do you want delete news?');
     if (!result) {
       return;
     } else {
+      requests(actions.remove(id), context.setNews);
     }
   };
-
-  if(!toDisplay) {
-    return <></>;
-  }
 
   return (
     <TableContainer component={Paper} className={table.paper}>
@@ -47,30 +51,28 @@ export const CustomTable = ({ array, setUserAction }) => {
         </TableHead>
 
         <TableBody>
-          {array.map((row, index) => (
+          {(context.news).map((row, index) => (
             <Tooltip
               key={row.id}
-              onClick={(event) => {
-                setUserAction('update');
-                console.log(event.currentTarget.id);
-              }}
+              onClick={selectedItem}
               interactive
               placement="left"
+              id={row.id}
               title={
                 <div
                   className={table.delete}
-                  onClick={() => userTryDelete(row.id)}
+                  onClick={() => deleteItem(row.id)}
                 >
                   Delete
                 </div>
               }
             >
 
-              <StyledTableRow id={row.id}>
-                <CustomTableCell info={index + 1} textStyle={typography.pLink} />
-                <CustomTableCell info={row.title} textStyle={typography.pLink} />
-                <CustomTableCell info={row.description} textStyle={typography.pLink} />
-                <CustomTableCell info={row.posted} textStyle={typography.pLink} />
+              <StyledTableRow>
+                <CustomTableCell id={row.id} info={index + 1} textStyle={typography.pLink} />
+                <CustomTableCell id={row.id} info={row.title} textStyle={typography.pLink} />
+                <CustomTableCell id={row.id} info={row.description} textStyle={typography.pLink} />
+                <CustomTableCell id={row.id} info={row.posted} textStyle={typography.pLink} />
               </StyledTableRow>
 
             </Tooltip>

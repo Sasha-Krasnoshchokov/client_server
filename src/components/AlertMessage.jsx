@@ -2,6 +2,7 @@ import { Alert, AlertTitle } from '@material-ui/lab';
 
 import { useAlertStyle } from '../styles/styles';
 
+/**   MAIN FUNCTION COMPONENT  */
 export const AlertMessage = ({ trySubmit, serverResponse }) => {
   const alert = useAlertStyle();
 

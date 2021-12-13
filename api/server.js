@@ -11,8 +11,8 @@ wss.on('connection', (ws) => {
 
     ws.send(JSON.stringify(getState(JSON.parse(data))));
 
-    // console.log('got from client: ', JSON.parse(data));
-    // console.log('to client: ', getState(JSON.parse(data)));
+    console.log('got from client: ', JSON.parse(data));
+    console.log('to client: ', getState(JSON.parse(data)));
 
   });
 

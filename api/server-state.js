@@ -50,9 +50,9 @@ const setState = ({ action, data }) => {
     case (APPEND):
       const newObj = {
         id: uuid.v4(),
-        title: 'data.title',
-        description: 'data.description',
-        posted: new Date().toLocaleString(),
+        title: data.title,
+        description: data.description,
+        posted: data.posted,
       };
       state.push(newObj);
       break;

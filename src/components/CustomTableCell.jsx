@@ -4,7 +4,8 @@ import Typography from '@material-ui/core/Typography';
 
 import { StyledTableCell } from '../styles/styles';
 
-export const CustomTableCell = ({ info, textStyle }) => {
+/**   MAIN FUNCTION COMPONENT  */
+export const CustomTableCell = ({ id, info, textStyle }) => {
 
   return (
     <StyledTableCell
@@ -17,6 +18,7 @@ export const CustomTableCell = ({ info, textStyle }) => {
       <Typography
         className={textStyle}
         variant="body2"
+        id={id}
       >
         {info}
       </Typography>

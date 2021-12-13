@@ -7,13 +7,13 @@ export const requests = (action, callback) => {
   switch (action.type) {
     case (GET_ALL):
       ws.addEventListener('open', () => {
-        ws.send(JSON.stringify({ action: action.type, data: action.value }));
+        ws.send(JSON.stringify({ action: GET_ALL }));
       });
       break;
     case (GET_ONE):
       ws.send(JSON.stringify({
         action: GET_ONE,
-        data: { ...action.value },
+        data: { id: action.value },
       }));
       break;
     case (APPEND):
@@ -30,9 +30,10 @@ export const requests = (action, callback) => {
       }));
       break;
     case (REMOVE):
+      console.log('try delete: ', action.value);
       ws.send(JSON.stringify({
         action: REMOVE,
-        data: { ...action.value },
+        data: { id: action.value },
       }));
       break;
 
@@ -41,17 +42,6 @@ export const requests = (action, callback) => {
   };
 
   ws.addEventListener('message', (data) => {
-    // console.log('got from server: ', JSON.parse(data.data));
     callback(JSON.parse(data.data));
   });
 };
-
-// export const request = (callback) => {
-//   ws.addEventListener('open', () => {
-//     ws.send(JSON.stringify({ action: 'GET_ALL', data: {} }));
-//   });
-
-//   ws.addEventListener('message', (data) => {
-//     callback(JSON.parse(data.data));
-//   });
-// };

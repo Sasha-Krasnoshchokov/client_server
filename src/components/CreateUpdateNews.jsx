@@ -3,18 +3,15 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
 import { usePage, useTypography, useButton } from '../styles/styles';
-import { NewsForm } from "./NewsForm";
+import { NewsForm } from "./CreateUpdateForm";
 
-export const CreateUpdateNews = ({ userAction, setUserAction }) => {
+/**   MAIN FUNCTION COMPONENT  */
+export const CreateUpdateNews = ({ userAction, setUserAction, oneNews }) => {
   const paper = usePage();
   const typography = useTypography();
   const button = useButton();
 
-  const oneNews = {
-    title: '',
-    description: '',
-    posted: `${new Date().toLocaleDateString()}`,
-  };
+  const pressedButton = () => (setUserAction(''));
 
   return (
     <Paper className={paper.updatingPage}>
@@ -33,7 +30,7 @@ export const CreateUpdateNews = ({ userAction, setUserAction }) => {
       />
 
       <Button
-        onClick={() => setUserAction('')}
+        onClick={pressedButton}
         variant="contained"
         className={button.button}
       >
