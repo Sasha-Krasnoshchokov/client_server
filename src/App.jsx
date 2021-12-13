@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { requests } from './controllers/api';
+import { listen, requests, checkConnection } from './controllers/api';
 import { actions } from './controllers/actions';
 
 import { HomePage } from "./components/HomePage";
@@ -11,10 +11,9 @@ export const App = () => {
   const [news, setNews] = useState([]);
 
   useEffect(() => {
-    requests(actions.getAll(), setNews);
+    listen(setNews);
+    checkConnection(() => requests(actions.getAll(), setNews));
   }, []);
-
-  console.log('to display: ', news);
 
   return (
     <StateContext.Provider value={{ news, setNews }}>

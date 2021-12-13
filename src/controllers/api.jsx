@@ -1,14 +1,15 @@
 import { GET_ALL, GET_ONE, APPEND, UPDATE, REMOVE} from './actions';
 
-
 const ws = new WebSocket('ws://localhost:8080', 'echo-protocol');
 
-export const requests = (action, callback) => {
+export const checkConnection = (callback) => {
+  ws.addEventListener('open', callback);
+};
+
+export const requests = (action) => {
   switch (action.type) {
     case (GET_ALL):
-      ws.addEventListener('open', () => {
-        ws.send(JSON.stringify({ action: GET_ALL }));
-      });
+      ws.send(JSON.stringify({ action: GET_ALL }));
       break;
     case (GET_ONE):
       ws.send(JSON.stringify({
@@ -40,7 +41,9 @@ export const requests = (action, callback) => {
     default:
       return {};
   };
+};
 
+export const listen = (callback) => {
   ws.addEventListener('message', (data) => {
     callback(JSON.parse(data.data));
   });
